@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+    <h1>Todo List</h1>
+
+    <!-- Add New Todo -->
+    <form action="/add" method="POST">
+        <input type="text" name="todoText" placeholder="Enter a new todo" required />
+        <button type="submit">Add</button>
+    </form>
+
+    <!-- display existing to do items -->
+    <% todos.forEach(todo=> { %>
+        <li>
+            <%= todo.task %>
+
+                <form action="/delete/<%= todo.id %>" method="POST" style="display: inline;">
+                    <button type="submit">Delete</button>
+                </form>
+        </li>
+
+        <% }); %>
+</body>
+
+</html>
