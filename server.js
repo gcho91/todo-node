@@ -41,7 +41,8 @@ app.post("/api/add", async (req, res) => {
     }
     // grab text from input field
     await db.query(`INSERT INTO todo (task) VALUES ($1)`, [todoText]);
-    res.redirect("/");
+    // Send success response
+    res.status(200).json({ message: "Todo added successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
