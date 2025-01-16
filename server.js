@@ -17,20 +17,23 @@ app.use(
   })
 );
 
-// Read
-app.get("/", async (req, res) => {
+// Serve static files from the "public" folder
+
+app.use(express.static("public"));
+
+// API Endpoint: Fetch all todos
+app.get("/api/todos", async (req, res) => {
   try {
-    // fetch todos from server
     const { rows } = await db.query(`SELECT * from todo`);
-    // Render the index.ejs file and pass todos as data
-    res.render("index", { todos: rows });
+    res.status(200).json(rows); // Send JSON data
   } catch (err) {
+    console.error(err);
     res.status(500).send("Server error");
   }
 });
 
-// Create
-app.post("/add", async (req, res) => {
+// API Endpoint - Add a new todo
+app.post("/api/add", async (req, res) => {
   const { todoText } = req.body;
   try {
     if (!todoText) {
@@ -45,13 +48,15 @@ app.post("/add", async (req, res) => {
   }
 });
 
-// Delete
-app.post("/delete/:id", async (req, res) => {
+// API Endpoint - Delete a todo by ID
+app.post("/api/delete/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await db.query(`DELETE FROM todo WHERE id = $1`, [id]);
-    res.redirect("/");
+    res.status(200).json({ message: "Todo deleted successfully" });
   } catch (err) {
+    console.error(err);
+
     res.status(500).send("Server error");
   }
 });
