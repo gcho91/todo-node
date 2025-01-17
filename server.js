@@ -27,8 +27,9 @@ app.get("/api/todos", async (req, res) => {
     const { rows } = await db.query(`SELECT * from todo`);
     res.status(200).json(rows); // Send JSON data
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
+    console.error("Error fetching todos:", err.message); // Log the error
+    // res.status(500).send("Server error");
+    res.status(500).json({ error: err.message }); // Send error details in the response
   }
 });
 
