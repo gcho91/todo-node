@@ -23,7 +23,7 @@ app.use(express.static("public"));
 // app.use("/static", express.static("public"));
 
 // API Endpoint: Fetch all todos
-app.get("/todos", async (req, res) => {
+app.get("/api/todos", async (req, res) => {
   try {
     const { rows } = await db.query(`SELECT * from todo`);
     res.status(200).json(rows); // Send JSON data
@@ -35,7 +35,7 @@ app.get("/todos", async (req, res) => {
 });
 
 // API Endpoint - Add a new todo
-app.post("/add", async (req, res) => {
+app.post("/api/add", async (req, res) => {
   const { todoText } = req.body;
   try {
     if (!todoText) {
@@ -52,7 +52,7 @@ app.post("/add", async (req, res) => {
 });
 
 // API Endpoint - Delete a todo by ID
-app.post("/delete/:id", async (req, res) => {
+app.post("/api/delete/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await db.query(`DELETE FROM todo WHERE id = $1`, [id]);
