@@ -20,6 +20,7 @@ app.use(
 // Serve static files from the "public" folder
 
 app.use(express.static("public"));
+// app.use("/static", express.static("public"));
 
 // API Endpoint: Fetch all todos
 app.get("/api/todos", async (req, res) => {
