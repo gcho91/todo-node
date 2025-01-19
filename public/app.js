@@ -5,7 +5,7 @@ const todoTextInput = document.getElementById("todo-text");
 // Fetch todos from the server
 async function fetchTodos() {
   try {
-    const response = await fetch("/api/todos");
+    const response = await fetch("/todos");
     const todos = await response.json();
 
     // Clear the list
@@ -35,7 +35,7 @@ async function addTodo() {
   if (!todoText) return;
 
   try {
-    await fetch("/api/add", {
+    await fetch("/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ todoText }),
@@ -51,7 +51,7 @@ async function addTodo() {
 // Delete a todo
 async function deleteTodo(id) {
   try {
-    await fetch(`/api/delete/${id}`, {
+    await fetch(`/delete/${id}`, {
       method: "POST",
     });
 
